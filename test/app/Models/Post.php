@@ -20,4 +20,11 @@ class Post extends Model
         'title',
         'content',
     ];
+
+
+    //inverse one-to-one or many relationship
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

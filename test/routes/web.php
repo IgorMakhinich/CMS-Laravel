@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,6 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return "Hi about page";
 });
-
 
 Route::get('/contact', function () {
     return "hi I am contact";
@@ -86,8 +86,8 @@ Route::get('contact', [PostsController::class, 'contact']);
 |--------------------------------------------------------------------------
 */
 
-
 Route::get('post/{id}/{name}/{password}', [PostsController::class, 'show_post']);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +97,7 @@ Route::get('post/{id}/{name}/{password}', [PostsController::class, 'show_post'])
 
 // php artisan make:migration create_post_table --create="posts"
 // php artisan make:migration add_is_admin_to_posts_table --table="posts"
+
 
 /*
 |--------------------------------------------------------------------------
@@ -255,4 +256,33 @@ Route::get('restore/{id}', function ($id) {
 
 Route::get('forcedelete/{id}', function ($id) {
     Post::onlyTrashed($id)->forceDelete();
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Database - Eloquent Relationships
+|--------------------------------------------------------------------------
+*/
+
+// !One to One relationship
+
+Route::get('post-by-userid/{id}', function ($id) {
+    return User::find($id)->post;
+});
+
+// !Inverse one-to-one or many relationship
+
+Route::get('user-by-postid/{id}', function($id) {
+    return Post::find($id)->user;
+});
+
+// !One to many relationship
+
+Route::get('posts-by-userid/{id}', function($id) {
+    $posts = User::find($id)->posts;
+
+    foreach ($posts as $key => $post) {
+        echo $key . ') ' . $post . "<br>";
+    }
 });
