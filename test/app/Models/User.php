@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
 
-    // One to One relationship
+    // !One to One relationship
 
     public function post()
     {
@@ -54,7 +54,7 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Post', 'user_id', 'id');
     }
 
-    // One to many relationship
+    // !One to many relationship
 
     public function posts()
     {
@@ -63,5 +63,16 @@ class User extends Authenticatable
 
         // Return with params
         return $this->hasMany('App\Models\Post', 'user_id', 'id');
+    }
+
+    // !Many to many relations
+
+    public function roles()
+    {
+        // Default return
+        return $this->belongsToMany('App\Models\Role')->withPivot('created_at');
+
+        // Return with params
+        // return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');
     }
 }

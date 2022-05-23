@@ -22,7 +22,7 @@ class Post extends Model
     ];
 
 
-    //inverse one-to-one or many relationship
+    //inverse one-to-one relationship
     public function user()
     {
         return $this->belongsTo('App\Models\User');

@@ -273,16 +273,41 @@ Route::get('post-by-userid/{id}', function ($id) {
 
 // !Inverse one-to-one or many relationship
 
-Route::get('user-by-postid/{id}', function($id) {
+Route::get('user-by-postid/{id}', function ($id) {
     return Post::find($id)->user;
 });
 
 // !One to many relationship
 
-Route::get('posts-by-userid/{id}', function($id) {
+Route::get('posts-by-userid/{id}', function ($id) {
     $posts = User::find($id)->posts;
 
     foreach ($posts as $key => $post) {
         echo $key . ') ' . $post . "<br>";
+    }
+});
+
+// !Many to many relations
+
+Route::get('role-by-userid/{id}', function ($id) {
+    // Variant 1
+
+    // $roles = User::find($id)->roles;
+
+    // foreach ($roles as $key => $role) {
+    //     echo $key . ') ' . $role . "<br>";
+    // }
+
+    // Variant 2
+    return User::find($id)->roles()->orderBy('id', 'desc')->get();
+});
+
+// !Querying intermediate table
+
+Route::get('pivot-by-userid/{id}', function ($id) {
+    $user = User::find($id);
+
+    foreach ($user->roles as $role) {
+        echo $role->pivot->created_at;
     }
 });
