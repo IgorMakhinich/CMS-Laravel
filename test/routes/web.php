@@ -5,6 +5,7 @@ use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Country;
 
 /*
 |--------------------------------------------------------------------------
@@ -309,5 +310,16 @@ Route::get('pivot-by-userid/{id}', function ($id) {
 
     foreach ($user->roles as $role) {
         echo $role->pivot->created_at;
+    }
+});
+
+
+// !Has many through relation
+
+Route::get('posts-by-countryid/{id}', function ($id) {
+    $country = Country::find($id);
+
+    foreach($country->posts as $post){
+        echo $post->title;
     }
 });
