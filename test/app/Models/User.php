@@ -75,4 +75,11 @@ class User extends Authenticatable
         // Return with params
         // return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');
     }
+
+
+    // !Polymorphic relation
+    public function photos()
+    {
+        return $this->morphMany('App\Models\Photo', 'imageable');
+    }
 }

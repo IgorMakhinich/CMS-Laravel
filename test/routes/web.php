@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Photo;
 
 /*
 |--------------------------------------------------------------------------
@@ -319,7 +320,35 @@ Route::get('pivot-by-userid/{id}', function ($id) {
 Route::get('posts-by-countryid/{id}', function ($id) {
     $country = Country::find($id);
 
-    foreach($country->posts as $post){
+    foreach ($country->posts as $post) {
         echo $post->title;
     }
+});
+
+
+// !Polymorphic relation
+
+Route::get('photo-by-userid/{id}', function ($id) {
+    $user = User::find($id);
+
+    foreach ($user->photos as $photo) {
+        echo $photo . "<br>";
+    }
+});
+
+Route::get('photo-by-postid/{id}', function ($id) {
+    $post = Post::find($id);
+
+    foreach ($post->photos as $photo) {
+        echo $photo . "<br>";
+    }
+});
+
+// !Polymorphic relation inverse
+
+Route::get('owner-by-photoid/{id}', function($id){
+    $photo = Photo::findOrFail($id);
+
+    return $photo->imageable;
+
 });

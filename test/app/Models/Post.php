@@ -27,4 +27,10 @@ class Post extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    // !Polymorphic relation
+    public function photos()
+    {
+        return $this->morphMany('App\Models\Photo', 'imageable');
+    }
 }
