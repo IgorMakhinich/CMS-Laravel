@@ -33,4 +33,10 @@ class Post extends Model
     {
         return $this->morphMany('App\Models\Photo', 'imageable');
     }
+
+    // !Polymorphic relation many to many
+    public function tags()
+    {
+        return $this->morphToMany('App\Models\Tag', 'taggable');
+    }
 }

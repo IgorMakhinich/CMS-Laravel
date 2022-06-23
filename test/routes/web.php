@@ -352,3 +352,7 @@ Route::get('owner-by-photoid/{id}', function($id){
     return $photo->imageable;
 
 });
+
+// !Polymorphic relation many to many
+
+
