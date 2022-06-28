@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Photo;
+use App\Models\Tag;
 
 /*
 |--------------------------------------------------------------------------
@@ -346,13 +347,26 @@ Route::get('photo-by-postid/{id}', function ($id) {
 
 // !Polymorphic relation inverse
 
-Route::get('owner-by-photoid/{id}', function($id){
+Route::get('owner-by-photoid/{id}', function ($id) {
     $photo = Photo::findOrFail($id);
 
     return $photo->imageable;
-
 });
 
 // !Polymorphic relation many to many
 
+Route::get('tag-by-post-id/{id}', function ($id) {
+    $post = Post::find($id);
 
+    foreach ($post->tags as $tag) {
+        echo $tag->name . "<br>";
+    }
+});
+
+Route::get('post-by-tag-id/{id}', function ($id) {
+    $tag = Tag::find($id);
+
+    foreach ($tag->posts as $post) {
+        echo $post;
+    }
+});
