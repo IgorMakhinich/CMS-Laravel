@@ -48,4 +48,5 @@ Route::get('/update/{id}', function ($id) {
 
 Route::get('/delete/{id}', function($id) {
     $user = User::findOrFail($id);
+    $user->address()->delete();
 });
