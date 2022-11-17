@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Models\Post;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -34,11 +36,17 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param CreatePostRequest $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
+        //validation
+//        $this->validate($request, [
+//            'title' => 'required|unique:posts|max:10',
+//        ]);
+
         //all
         // return $request->all();
 
