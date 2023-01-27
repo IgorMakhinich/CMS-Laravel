@@ -39,4 +39,9 @@ class Post extends Model
     {
         return $this->morphToMany('App\Models\Tag', 'taggable');
     }
+
+    public static function scopeList($query)
+    {
+        return $query->orderBy('id', 'desc')->get();
+    }
 }
