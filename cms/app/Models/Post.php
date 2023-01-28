@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
+    public $imgpath = "/images/";
     use HasFactory, SoftDeletes;
 
     //if another
-    // protected $table = 'posts';
+    // protected $table = "posts';
     // protected $primarykey = 'id';
 
     protected $dates = ['deleted_at'];
@@ -19,6 +20,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
+        'path'
     ];
 
 
@@ -43,5 +45,11 @@ class Post extends Model
     public static function scopeList($query)
     {
         return $query->orderBy('id', 'desc')->get();
+    }
+
+    public function getPathAttribute($value)
+    {
+        $path = $this->imgpath . $value;
+        return $path;
     }
 }
